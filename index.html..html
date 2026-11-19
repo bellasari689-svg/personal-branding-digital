@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAL Learning — Personal Branding Digital</title>
+<style>
+:root{--navy:#17365d;--blue:#2878bd;--pale:#eef5fc;--ink:#243447;--muted:#65758b;--line:#dce5ef;--bg:#f5f8fc;--white:#fff;--green:#21845b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+header{background:linear-gradient(120deg,#17365d,#286da8);color:#fff;padding:24px max(18px,calc((100% - 1050px)/2))}
+.brand{font-size:13px;letter-spacing:1.4px;font-weight:bold;opacity:.9}.hero{padding:24px 0 8px}.hero h1{font-size:clamp(25px,4vw,38px);line-height:1.15;margin:8px 0}.hero p{max-width:720px;color:#e2edf8;margin:10px 0}
+.meta{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:#e2edf8}
+nav{background:#fff;border-bottom:1px solid var(--line);padding:10px max(12px,calc((100% - 1050px)/2));display:flex;gap:7px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+button,.navbtn{border:0;border-radius:9px;padding:10px 14px;background:var(--pale);color:var(--navy);font-weight:600;cursor:pointer;font-size:14px}
+button:hover,.navbtn:hover{filter:brightness(.97)}button.primary,.navbtn.active{background:var(--blue);color:white}button:disabled{opacity:.45;cursor:not-allowed}
+main{max-width:1050px;margin:24px auto;padding:0 16px 40px}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:16px;box-shadow:0 3px 14px #17365d0a}
+h2{color:var(--navy);margin:0 0 10px;font-size:25px}h3{margin:0 0 8px;color:var(--navy)}p{margin:7px 0}.muted{color:var(--muted);font-size:14px}.tag{display:inline-block;background:#e8f2fc;color:#24669f;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:bold;letter-spacing:.4px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px}.tile{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff}.tile p{font-size:14px;color:var(--muted)}
+.progress{height:10px;background:#e7edf4;border-radius:20px;overflow:hidden}.progress span{display:block;height:100%;background:#2783ce;width:0;transition:.25s}
+.unit{display:flex;justify-content:space-between;gap:12px;align-items:center;text-align:left;width:100%;background:#fff;border:1px solid var(--line);padding:16px;border-radius:12px;margin:8px 0;color:var(--ink)}
+.unit:hover{border-color:#83b5df}.unit small{display:block;color:var(--muted);font-weight:normal;margin-top:4px}.done{color:var(--green);font-size:12px;font-weight:bold}
+.callout{background:#f0f6fc;border-left:4px solid var(--blue);padding:14px;border-radius:8px;margin:12px 0}
+label.option{display:block;padding:10px;border:1px solid var(--line);border-radius:9px;margin:7px 0;cursor:pointer}label.option:hover{background:#f5f9fd}
+input[type=radio]{margin-right:8px}textarea{width:100%;min-height:105px;padding:12px;border:1px solid #cbd7e4;border-radius:9px;font:inherit}
+.feedback{padding:12px;border-radius:9px;background:#f0f7f3;margin:8px 0}.bad{background:#fff5e9}
+footer{max-width:1050px;margin:auto;padding:0 16px 30px;color:var(--muted);font-size:12px}
+@media(max-width:600px){header{padding:18px}.panel{padding:17px}nav{gap:5px}.navbtn{flex:1;padding:9px 6px;font-size:12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">KAL LEARNING · DIGITAL LEARNING PLATFORM</div>
+  <div class="hero">
+    <div class="tag">COURSE PEMBELAJARAN MANDIRI</div>
+    <h1>Personal Branding Digital</h1>
+    <p>Membangun Portofolio Berbasis Website Sederhana</p>
+    <div class="meta"><span>▣ 6 Unit Pembelajaran</span><span>◷ Belajar mandiri</span><span>▤ Praktik berbasis proyek</span></div>
+  </div>
+</header>
+<nav>
+  <button class="navbtn active" data-page="home">⌂ Beranda</button>
+  <button class="navbtn" data-page="materials">▤ Materi</button>
+  <button class="navbtn" data-page="activities">✎ Aktivitas</button>
+  <button class="navbtn" data-page="quiz">✓ Kuis</button>
+  <button class="navbtn" data-page="evaluation">▥ Evaluasi</button>
+  <button class="navbtn" data-page="guide">? Panduan</button>
+</nav>
+<main id="app"></main>
+<footer>Prototype interaktif v1.0 · Simulasi pembelajaran, bukan sistem LMS yang terhubung ke akun atau database.</footer>
+<script>
+const units=[
+["Mengenal Personal Branding Digital","Memahami konsep dan pentingnya identitas digital."],
+["Mengenali Diri dan Menentukan Arah","Mengidentifikasi kekuatan, keterampilan, dan target audiens."],
+["Merancang Konten dan Struktur Website","Menyusun halaman dan konten portofolio."],
+["Membangun Website Portofolio","Mempraktikkan pembuatan website sederhana."],
+["Publikasi dan Optimasi Portofolio","Menyempurnakan dan memublikasikan website."],
+["Evaluasi dan Pengembangan","Melakukan evaluasi, revisi, dan refleksi."]
+];
+let page="home",activeUnit=1,completed=new Set(),quizResult=null,reflectionSaved=false;
+const app=document.getElementById("app");
+function progress(){return Math.round(completed.size/6*100)}
+function nav(p){page=p;document.querySelectorAll(".navbtn").forEach(b=>b.classList.toggle("active",b.dataset.page===p));render()}
+document.querySelectorAll(".navbtn").forEach(b=>b.addEventListener("click",()=>nav(b.dataset.page)));
+function btn(label,fn,primary=true){return `<button class="${primary?'primary':''}" data-action="${fn}">${label}</button>`}
+function render(){
+let out="";
+if(page==="home"){
+out=`<section class="panel"><span class="tag">HALAMAN BERANDA</span><h2>Selamat Datang di Course!</h2><p>Mulai perjalananmu membangun identitas profesional melalui website portofolio sederhana.</p><div class="callout"><b>Tentang pembelajaran</b><p>Course ini mengajak kamu mengenali potensi diri, menyusun identitas digital, dan membuat website untuk menampilkan profil, keterampilan, serta karya yang pernah dihasilkan.</p></div>${btn("Mulai Pembelajaran →","materials")}</section>
+<section class="panel"><h3>Capaian Pembelajaran</h3><ol><li>Memahami konsep personal branding digital.</li><li>Mengidentifikasi potensi dan kompetensi diri.</li><li>Merancang struktur dan konten website.</li><li>Membuat dan memublikasikan website portofolio.</li><li>Mengevaluasi dan mengembangkan portofolio digital.</li></ol></section>
+<section class="panel"><h3>Progres Pembelajaran</h3><h2>${progress()}%</h2><div class="progress"><span style="width:${progress()}%"></span></div><p class="muted">${completed.size} dari 6 unit ditandai selesai.</p>${btn("Lanjutkan Belajar","materials")}</section>`;
+}
+if(page==="materials"){
+out=`<section class="panel"><span class="tag">DAFTAR MATERI</span><h2>Materi Pembelajaran</h2><p class="muted">Pilih unit untuk membuka materi dan aktivitas pembelajaran.</p>${units.map((u,i)=>`<button class="unit" data-unit="${i+1}"><span><b>Unit ${i+1} · ${u[0]}</b><small>${u[1]}</small></span><span class="${completed.has(i+1)?'done':'muted'}">${completed.has(i+1)?'✓ Selesai':'› Buka'}</span></button>`).join("")}</section>`;
+}
+if(page==="activities"){
+let content=[
+`<h3>Materi: Dasar Personal Branding Digital</h3><p>Personal branding adalah upaya membangun dan mengomunikasikan identitas, kemampuan, serta nilai diri agar dikenal oleh orang lain.</p><ul><li>Pengertian personal branding.</li><li>Pentingnya identitas digital.</li><li>Manfaat portofolio online.</li><li>Etika menampilkan diri di internet.</li></ul>`,
+`<h3>Materi: Mengenali Potensi Diri</h3><p>Kenali hal-hal yang ingin kamu tampilkan kepada pengunjung.</p><ul><li>Minat dan bidang yang ditekuni.</li><li>Keterampilan dan kompetensi.</li><li>Pengalaman atau karya.</li><li>Target audiens portofolio.</li></ul><label>Catatan refleksi diri</label><textarea placeholder="Tuliskan gambaran singkat tentang dirimu..."></textarea>`,
+`<h3>Materi: Merancang Struktur Website</h3><p>Website portofolio perlu disusun secara terstruktur agar pengunjung mudah menemukan informasi.</p><ol><li>Beranda: pengenalan singkat.</li><li>Tentang Saya: profil dan kompetensi.</li><li>Portofolio: kumpulan karya dan pengalaman.</li><li>Kontak: informasi untuk menghubungi pemilik website.</li></ol>`,
+`<h3>Materi: Praktik Membuat Website</h3><p>Mulai membuat website menggunakan platform yang mudah digunakan, misalnya Google Sites.</p><ol><li>Buka platform pembuat website.</li><li>Buat situs baru dan pilih tema.</li><li>Tambahkan halaman dan menu navigasi.</li><li>Masukkan profil, gambar, dan karya.</li><li>Periksa tampilan website.</li></ol><div class="callout">Tips: mulai dengan halaman sederhana. Gunakan informasi yang relevan dan pastikan konten yang ditampilkan memang boleh dipublikasikan.</div><h3>Checklist praktik</h3><label class="option"><input type="checkbox"> Saya sudah membuat halaman beranda.</label><label class="option"><input type="checkbox"> Saya sudah mengisi halaman profil.</label><label class="option"><input type="checkbox"> Saya sudah menambahkan karya.</label><label class="option"><input type="checkbox"> Saya sudah menambahkan kontak atau tautan.</label>`,
+`<h3>Materi: Publikasi Website</h3><p>Sebelum membagikan website, lakukan pemeriksaan:</p><ul><li>Semua halaman sudah terisi.</li><li>Menu dan tautan berfungsi.</li><li>Teks mudah dibaca.</li><li>Tampilan sesuai di ponsel dan komputer.</li><li>Pengaturan akses website sudah benar.</li></ul>`,
+`<h3>Materi: Evaluasi dan Pengembangan</h3><p>Evaluasi dilakukan untuk memastikan website sudah sesuai dengan tujuan personal branding.</p><ul><li>Minta teman meninjau website.</li><li>Catat masukan yang diberikan.</li><li>Perbaiki bagian yang belum sesuai.</li><li>Perbarui karya dan pengalaman secara berkala.</li></ul>`
+];
+out=`<section class="panel"><span class="tag">AKTIVITAS PEMBELAJARAN</span><h2>Ruang Belajar</h2><label for="unitSelect">Pilih unit pembelajaran</label><select id="unitSelect" style="width:100%;padding:11px;border:1px solid #cbd7e4;border-radius:8px;margin:8px 0">${units.map((u,i)=>`<option value="${i+1}" ${activeUnit===i+1?'selected':''}>Unit ${i+1} — ${u[0]}</option>`).join("")}</select><div class="callout"><span class="tag">UNIT ${activeUnit}</span><h3>${units[activeUnit-1][0]}</h3>${units[activeUnit-1][1]}</div>${content[activeUnit-1]}<hr style="border:0;border-top:1px solid #e1e8f0;margin:20px 0"><p class="muted">Setelah mempelajari materi, tandai unit ini selesai.</p>${btn("✓ Tandai Unit Selesai","complete") } ${btn("Ke Kuis Formatif →","quiz",false)}</section>`;
+}
+if(page==="quiz"){
+out=`<section class="panel"><span class="tag">KUIS FORMATIF</span><h2>Uji Pemahamanmu</h2><p class="muted">Jawab tiga pertanyaan untuk mengetahui pemahamanmu tentang personal branding digital.</p>
+<form id="quizForm">
+${question(1,"Apa tujuan utama personal branding digital?",["Memiliki banyak akun media sosial.","Membangun identitas dan menunjukkan nilai atau kompetensi diri secara digital.","Mengikuti semua tren internet.","Mengumpulkan sebanyak mungkin pengikut."], "b")}
+${question(2,"Halaman yang digunakan untuk menampilkan hasil karya disebut ...",["Beranda.","Kontak.","Portofolio.","Pengaturan."],"c")}
+${question(3,"Apa yang perlu dilakukan sebelum membagikan website portofolio kepada orang lain?",["Memeriksa kelengkapan konten, navigasi, dan akses website.","Menghapus semua halaman selain beranda.","Menyembunyikan semua informasi karya.","Menggunakan sebanyak mungkin warna dan animasi."],"a")}
+<button class="primary" type="submit">Kirim Jawaban</button></form>
+${quizResult!==null?`<div class="feedback ${quizResult<2?'bad':''}"><h3>Hasil Kuis: ${quizResult}/3 (${Math.round(quizResult/3*100)}/100)</h3><b>${quizResult===3?'Hebat! Semua jawaban benar.':quizResult===2?'Bagus! Tinggal sedikit lagi.':'Tetap semangat, pelajari kembali materinya.'}</b><p>1. Tujuan personal branding digital adalah membangun identitas dan memperlihatkan kompetensi diri.</p><p>2. Halaman portofolio menampilkan karya dan pengalaman.</p><p>3. Pemeriksaan memastikan website siap dibagikan.</p></div>${btn("Ulangi Kuis","retry",false)} ${btn("Lihat Evaluasi Akhir →","evaluation")}`:""}</section>`;
+}
+if(page==="evaluation"){
+out=`<section class="panel"><span class="tag">HALAMAN EVALUASI</span><h2>Evaluasi Pembelajaran</h2><h3>Progres Course: ${progress()}%</h3><div class="progress"><span style="width:${progress()}%"></span></div><p class="muted">${completed.size} dari 6 unit ditandai selesai.</p><hr style="border:0;border-top:1px solid #e1e8f0;margin:20px 0"><h3>Hasil Kuis Formatif</h3>${quizResult===null?`<p class="muted">Kamu belum menyelesaikan kuis formatif.</p>${btn("Kerjakan Kuis","quiz")}`:`<h2>${Math.round(quizResult/3*100)}/100</h2><p>${quizResult} dari 3 jawaban benar.</p><div class="feedback ${quizResult<2?'bad':''}">${quizResult>=2?'Kamu sudah memahami sebagian besar materi. Pertahankan dan lanjutkan praktik membuat website.':'Pelajari kembali konsep personal branding, struktur website, dan pemeriksaan sebelum publikasi.'}</div>`}<hr style="border:0;border-top:1px solid #e1e8f0;margin:20px 0"><h3>Refleksi Pembelajaran</h3><p>Apa hal baru yang kamu pelajari? Bagaimana kamu akan menerapkannya untuk membangun portofolio pribadi?</p><textarea id="reflection" placeholder="Tuliskan refleksi pembelajaranmu di sini..."></textarea><p><button class="primary" id="saveReflection">Kirim Refleksi</button></p><div id="reflectionMsg">${reflectionSaved?'<div class="feedback">✓ Refleksi berhasil dicatat dalam sesi prototype.</div>':''}</div></section>`;
+}
+if(page==="guide"){
+out=`<section class="panel"><span class="tag">PANDUAN PENGGUNA</span><h2>Cara Menggunakan Prototype</h2><ol><li>Mulai dari halaman Beranda untuk memahami tujuan course.</li><li>Buka Daftar Materi dan pilih unit pembelajaran.</li><li>Masuk ke Aktivitas untuk membaca materi dan mencoba latihan.</li><li>Tandai unit selesai setelah mempelajari materi.</li><li>Kerjakan Kuis untuk mendapatkan nilai dan pembahasan otomatis.</li><li>Buka Evaluasi untuk melihat progres dan menuliskan refleksi.</li></ol><div class="callout"><b>Catatan prototype</b><p>Progres dan jawaban tersimpan selama halaman ini terbuka. Data belum terhubung dengan database atau sistem akun LMS.</p></div>${btn("Kembali ke Beranda","home")}</section>`;
+}
+app.innerHTML=out;
+app.querySelectorAll("[data-action]").forEach(b=>b.addEventListener("click",()=>{let a=b.dataset.action;if(a==="complete"){completed.add(activeUnit);render()}else if(a==="retry"){quizResult=null;render()}else nav(a)}));
+app.querySelectorAll("[data-unit]").forEach(b=>b.addEventListener("click",()=>{activeUnit=+b.dataset.unit;nav("activities")}));
+const sel=document.getElementById("unitSelect");if(sel)sel.addEventListener("change",e=>{activeUnit=+e.target.value;render()});
+const form=document.getElementById("quizForm");if(form)form.addEventListener("submit",e=>{e.preventDefault();let data=new FormData(form);let score=(data.get("q1")==="b")+(data.get("q2")==="c")+(data.get("q3")==="a");quizResult=score;render()});
+const save=document.getElementById("saveReflection");if(save)save.addEventListener("click",()=>{let v=document.getElementById("reflection").value.trim();if(v){reflectionSaved=true;document.getElementById("reflectionMsg").innerHTML='<div class="feedback">✓ Refleksi berhasil dicatat dalam sesi prototype.</div>'}});
+}
+function question(n,title,opts,correct){return `<div class="tile"><b>${n}. ${title}</b>${opts.map((o,i)=>`<label class="option"><input type="radio" name="q${n}" value="${"abcd"[i]}" required>${o}</label>`).join("")}</div><br>`}
+render();
+</script>
+</body>
+</html>
